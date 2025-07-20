@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UINIK Estudios Presenta - Decode the Clue</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Creepster&family=Nosifer&family=Butcherman&family=Cinzel:wght@400;600;700&family=Playfair+Display:wght@400;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Playfair Display', serif;
+            background: #2a1810;
+            color: #d4b896;
+            overflow-x: hidden;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* Animación de entrada - UINIK ESTUDIOS */
+        .intro-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: #000;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 1;
+            animation: introSequence 5s ease-in-out forwards;
+        }
+
+        .intro-studio {
+            font-family: 'Cinzel', serif;
+            font-size: 4rem;
+            font-weight: 700;
+            color: #d4b896;
+            text-transform: uppercase;
+            letter-spacing: 8px;
+            margin-bottom: 1rem;
+            opacity: 0;
+            animation: studioAppear 2s ease-out 0.5s forwards;
+            text-shadow: 0 0 20px rgba(212, 184, 150, 0.5);
+        }
+
+        .intro-presenta {
+            font-family: 'Cinzel', serif;
+            font-size: 2rem;
+            color: #d4b896;
+            text-transform: lowercase;
+            font-style: italic;
+            letter-spacing: 4px;
+            opacity: 0;
+            animation: presentaAppear 1s ease-out 2.5s forwards;
+        }
+
+        /* Contenido principal */
+        .main-content {
+            opacity: 0;
+            animation: mainContentAppear 1.5s ease-out 5s forwards;
+        }
+
+        /* Fondo texturizado */
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(139, 69, 19, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(160, 82, 45, 0.2) 0%, transparent 50%),
+                linear-gradient(135deg, #2a1810 0%, #1a0f08 100%);
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Header con navegación */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 4rem;
+            padding-top: 2rem;
+        }
+
+        .nav {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav a {
+            color: #d4b896;
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav a:hover {
+            color: #cd853f;
+        }
+
+        .nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #cd853f;
+            transition: width 0.3s ease;
+        }
+
+        .nav a:hover::after {
+            width: 100%;
+        }
+
+        /* Logo y título principal */
+        .main-logo-section {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .logo-icons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .emoji-icon {
+            font-size: 5rem;
+            filter: 
+                drop-shadow(0 0 10px rgba(212, 184, 150, 0.3))
+                sepia(1) 
+                hue-rotate(25deg) 
+                saturate(1.2) 
+                brightness(1.1)
+                contrast(1.1);
+            transition: transform 0.3s ease;
+            color: #d4b896;
+        }
+
+        .emoji-icon:hover {
+            transform: scale(1.1);
+            filter: 
+                drop-shadow(0 0 15px rgba(212, 184, 150, 0.5))
+                sepia(1.2) 
+                hue-rotate(30deg) 
+                saturate(1.4) 
+                brightness(1.2)
+                contrast(1.2);
+        }
+
+        .main-title {
+            font-family: 'Butcherman', serif;
+            font-size: 5rem;
+            color: #d4b896;
+            text-transform: uppercase;
+            letter-spacing: 6px;
+            text-shadow: 
+                3px 3px 0px #8b4513,
+                6px 6px 0px rgba(0,0,0,0.3),
+                0 0 30px rgba(212, 184, 150, 0.4);
+            margin-bottom: 2rem;
+            line-height: 0.9;
+        }
+
+        /* Sección de ilustraciones */
+        .illustration-section {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 3rem;
+            margin: 3rem 0;
+        }
+
+        .scroll-icon {
+            width: 120px;
+            height: 180px;
+            background: #d4b896;
+            border-radius: 10px 10px 20px 20px;
+            position: relative;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.3);
+        }
+
+        .scroll-icon::before {
+            content: '?';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 3rem;
+            color: #2a1810;
+            font-weight: bold;
+        }
+
+        .laptop-icon {
+            width: 180px;
+            height: 120px;
+            background: #1a1a1a;
+            border-radius: 8px;
+            position: relative;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+        }
+
+        .laptop-screen {
+            width: 160px;
+            height: 100px;
+            background: #000;
+            border-radius: 4px;
+            margin: 10px auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .code-lines {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+        }
+
+        .code-line {
+            height: 3px;
+            background: #cd853f;
+            margin-bottom: 4px;
+            border-radius: 2px;
+            animation: codeFlicker 2s ease-in-out infinite;
+        }
+
+        .code-line:nth-child(1) { width: 80%; }
+        .code-line:nth-child(2) { width: 60%; animation-delay: 0.5s; }
+        .code-line:nth-child(3) { width: 90%; animation-delay: 1s; }
+        .code-line:nth-child(4) { width: 70%; animation-delay: 1.5s; }
+
+        /* Botón principal */
+        .join-button {
+            display: block;
+            width: fit-content;
+            margin: 3rem auto;
+            padding: 1rem 3rem;
+            background: #cd853f;
+            color: #2a1810;
+            font-size: 1.3rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            box-shadow: 
+                0 5px 15px rgba(205, 133, 63, 0.3),
+                inset 0 1px 0 rgba(255,255,255,0.2);
+        }
+
+        .join-button:hover {
+            background: #daa520;
+            transform: translateY(-2px);
+            box-shadow: 
+                0 8px 25px rgba(205, 133, 63, 0.4),
+                inset 0 1px 0 rgba(255,255,255,0.3);
+        }
+
+        /* Descripción principal */
+        .main-description {
+            text-align: center;
+            font-size: 1.8rem;
+            color: #d4b896;
+            margin: 3rem 0;
+            font-style: italic;
+            line-height: 1.4;
+        }
+
+        /* Sección de texto descriptivo */
+        .description-section {
+            display: flex;
+            gap: 3rem;
+            margin: 4rem 0;
+            align-items: flex-start;
+        }
+
+        .description-column {
+            flex: 1;
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: #c4a484;
+        }
+
+        /* Call to action final */
+        .final-cta {
+            text-align: center;
+            font-size: 2.2rem;
+            color: #d4b896;
+            font-weight: 600;
+            margin: 3rem 0;
+            text-shadow: 0 0 20px rgba(212, 184, 150, 0.3);
+        }
+
+        /* Patrocinadores */
+        .sponsors {
+            text-align: center;
+            margin-top: 4rem;
+            padding: 2rem;
+            border-top: 2px solid #3d2817;
+        }
+
+        .sponsors-text {
+            font-size: 0.9rem;
+            color: #8b7355;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+        }
+
+        .sponsors-names {
+            font-size: 1.2rem;
+            color: #cd853f;
+            font-weight: 600;
+            letter-spacing: 3px;
+        }
+
+        /* Animaciones */
+        @keyframes introSequence {
+            0% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { opacity: 0; pointer-events: none; }
+        }
+
+        @keyframes studioAppear {
+            0% { 
+                opacity: 0; 
+                transform: scale(0.8);
+            }
+            100% { 
+                opacity: 1; 
+                transform: scale(1);
+            }
+        }
+
+        @keyframes presentaAppear {
+            0% { 
+                opacity: 0; 
+                transform: translateY(30px);
+            }
+            100% { 
+                opacity: 1; 
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes mainContentAppear {
+            0% { 
+                opacity: 0; 
+            }
+            100% { 
+                opacity: 1; 
+            }
+        }
+
+        @keyframes codeFlicker {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        /* Efectos de glitch ocasionales */
+        .glitch {
+            animation: glitch 0.3s ease-in-out;
+        }
+
+        @keyframes glitch {
+            0% { transform: translate(0); }
+            20% { transform: translate(-1px, 1px); }
+            40% { transform: translate(-1px, -1px); }
+            60% { transform: translate(1px, 1px); }
+            80% { transform: translate(1px, -1px); }
+            100% { transform: translate(0); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .intro-studio {
+                font-size: 2.5rem;
+                letter-spacing: 4px;
+            }
+            
+            .intro-presenta {
+                font-size: 1.5rem;
+                letter-spacing: 2px;
+            }
+            
+            .main-title {
+                font-size: 3rem;
+                letter-spacing: 3px;
+            }
+            
+            .illustration-section {
+                flex-direction: column;
+                gap: 2rem;
+            }
+            
+            .description-section {
+                flex-direction: column;
+                gap: 2rem;
+            }
+            
+            .nav {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .header {
+                flex-direction: column;
+                gap: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animación de entrada -->
+    <div class="intro-overlay">
+        <div class="intro-studio">UINIK ESTUDIOS</div>
+        <div class="intro-presenta">presenta</div>
+    </div>
+
+    <div class="background"></div>
+    
+    <div class="main-content">
+        <div class="container">
+            <!-- Header -->
+            <header class="header">
+                <div></div>
+                <nav class="nav">
+                    <a href="#rules">REGLAS</a>
+                    <a href="#signup">INSCRÍBETE</a>
+                </nav>
+            </header>
+
+            <!-- Logo y título principal -->
+            <div class="main-logo-section">
+                <div class="logo-icons">
+                    <span class="emoji-icon">🕵️</span>
+                    <span class="emoji-icon">🔍</span>
+                    <span class="emoji-icon">🧩</span>
+                </div>
+                <h1 class="main-title">Decode<br>The Clue</h1>
+            </div>
+
+            <!-- Ilustraciones centrales -->
+            <div class="illustration-section">
+                <div class="scroll-icon"></div>
+                <div class="laptop-icon">
+                    <div class="laptop-screen">
+                        <div class="code-lines">
+                            <div class="code-line"></div>
+                            <div class="code-line"></div>
+                            <div class="code-line"></div>
+                            <div class="code-line"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Botón principal -->
+            <a href="#join" class="join-button">ÚNETE AL CONCURSO</a>
+
+            <!-- Descripción principal -->
+            <p class="main-description">
+                Un emocionante concurso de programación donde la lógica se encuentra con el misterio.
+            </p>
+
+            <!-- Descripción detallada -->
+            <div class="description-section">
+                <div class="description-column">
+                    <p>Los participantes se sumergirán en una historia llena de pistas por descifrar, utilizando sus habilidades de programación para resolver acertijos desafiantes.</p>
+                </div>
+                <div class="description-column">
+                    <p>Ya seas principiante o experto, este desafío pondrá a prueba tu creatividad, pensamiento crítico y habilidades de resolución de problemas en una experiencia divertida, educativa y altamente desafiante.</p>
+                </div>
+            </div>
+
+            <!-- Call to action final -->
+            <div class="final-cta">
+                ¿Estás listo para descifrar la pista?
+            </div>
+
+            <!-- Patrocinadores -->
+            <div class="sponsors">
+                <div class="sponsors-text">Patrocinado por</div>
+                <div class="sponsors-names">DDTECH • LOGITECH • TEC DE MÉRIDA</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Efectos de glitch ocasionales después de la introducción
+        setTimeout(() => {
+            function addGlitchEffect() {
+                const elements = ['.main-title', '.main-description', '.final-cta'];
+                const randomElement = document.querySelector(elements[Math.floor(Math.random() * elements.length)]);
+                
+                if (randomElement) {
+                    randomElement.classList.add('glitch');
+                    setTimeout(() => {
+                        randomElement.classList.remove('glitch');
+                    }, 300);
+                }
+            }
+
+            setInterval(() => {
+                if (Math.random() < 0.2) { // 20% probabilidad
+                    addGlitchEffect();
+                }
+            }, Math.random() * 8000 + 5000); // Entre 5-13 segundos
+        }, 6000); // Después de la introducción
+
+        // Efecto de hover para el botón
+        const joinButton = document.querySelector('.join-button');
+        joinButton.addEventListener('mouseenter', function() {
+            this.style.background = '#daa520';
+        });
+
+        joinButton.addEventListener('mouseleave', function() {
+            this.style.background = '#cd853f';
+        });
+
+        // Animación adicional para los iconos
+        const icons = document.querySelectorAll('.emoji-icon');
+        icons.forEach((icon, index) => {
+            icon.style.animation = `float 3s ease-in-out ${index * 0.5}s infinite`;
+        });
+
+        // CSS para la animación float
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes float {
+                0%, 100% { transform: translateY(0px); }
+                50% { transform: translateY(-10px); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
