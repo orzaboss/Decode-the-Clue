@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iPhone Interface</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        .iphone {
+            width: 375px;
+            height: 812px;
+            background: #000;
+            border-radius: 40px;
+            padding: 8px;
+            box-shadow: 0 0 50px rgba(255, 255, 255, 0.1);
+        }
+
+        .screen {
+            width: 100%;
+            height: 100%;
+            background: url('wallpaper.png') center/cover;
+            border-radius: 32px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .status-bar {
+            height: 44px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            color: white;
+            font-size: 14px;
+            font-weight: 600;
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .time {
+            font-size: 16px;
+        }
+
+        .battery-wifi {
+            display: flex;
+            gap: 5px;
+            align-items: center;
+        }
+
+        .apps-container {
+            padding: 60px 30px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+        }
+
+        .app {
+            width: 60px;
+            height: 60px;
+            border-radius: 13px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.1s ease;
+            position: relative;
+        }
+
+        .app:active {
+            transform: scale(0.95);
+        }
+
+        .whatsapp {
+            background: #25D366;
+        }
+
+        .uinik {
+            background: #000;
+            border: 2px solid #fff;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .app-label {
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            font-size: 12px;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+            white-space: nowrap;
+        }
+
+        .whatsapp-interface {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #111b21;
+            color: white;
+        }
+
+        .whatsapp-header {
+            height: 90px;
+            background: #202c33;
+            display: flex;
+            align-items: flex-end;
+            padding: 10px 16px;
+            padding-top: 50px;
+        }
+
+        .whatsapp-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: white;
+        }
+
+        .chats-list {
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .chat-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            border-bottom: 1px solid #2a3942;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .chat-item:hover {
+            background: #2a3942;
+        }
+
+        .chat-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: url('image1') center/cover;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+
+        .chat-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .chat-name {
+            font-size: 16px;
+            font-weight: 400;
+            color: #e9edef;
+            margin-bottom: 2px;
+        }
+
+        .chat-last-message {
+            font-size: 14px;
+            color: #8696a0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .chat-time {
+            font-size: 12px;
+            color: #8696a0;
+            white-space: nowrap;
+        }
+
+        .group-chat {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0b141a;
+        }
+
+        .chat-header {
+            height: 90px;
+            background: #202c33;
+            display: flex;
+            align-items: flex-end;
+            padding: 10px 16px;
+            padding-top: 50px;
+            gap: 12px;
+        }
+
+        .back-btn {
+            color: #00a884;
+            font-size: 18px;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .chat-header-info {
+            flex: 1;
+        }
+
+        .chat-header-name {
+            font-size: 18px;
+            font-weight: 400;
+            color: #e9edef;
+        }
+
+        .chat-header-status {
+            font-size: 13px;
+            color: #8696a0;
+        }
+
+        .messages-container {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px;
+        }
+
+        .date-divider {
+            text-align: center;
+            margin: 20px 0;
+            color: #8696a0;
+            font-size: 13px;
+        }
+
+        .message {
+            margin-bottom: 8px;
+            max-width: 85%;
+        }
+
+        .message.sent {
+            margin-left: auto;
+        }
+
+        .message.received {
+            margin-right: auto;
+        }
+
+        .message-bubble {
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 14px;
+            line-height: 1.4;
+            position: relative;
+        }
+
+        .message.sent .message-bubble {
+            background: #005c4b;
+            color: #e9edef;
+        }
+
+        .message.received .message-bubble {
+            background: #202c33;
+            color: #e9edef;
+        }
+
+        .message-author {
+            font-size: 13px;
+            font-weight: 500;
+            margin-bottom: 2px;
+        }
+
+        .message-time {
+            font-size: 11px;
+            color: #8696a0;
+            margin-top: 4px;
+            text-align: right;
+        }
+
+        .message.received .message-time {
+            text-align: left;
+        }
+
+        .audio-message {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            background: #202c33;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .audio-message:hover {
+            background: #2a3942;
+        }
+
+        .audio-play-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #00a884;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        .audio-duration {
+            font-size: 14px;
+            color: #e9edef;
+        }
+
+        .link-preview {
+            background: #1f2937;
+            border-radius: 8px;
+            padding: 12px;
+            margin-top: 8px;
+            border-left: 3px solid #00a884;
+        }
+
+        .link-url {
+            color: #00a884;
+            font-size: 13px;
+            text-decoration: none;
+        }
+
+        .link-title {
+            color: #e9edef;
+            font-size: 14px;
+            margin-top: 4px;
+        }
+
+        .mention {
+            color: #00a884;
+            font-weight: 500;
+        }
+
+        .home-indicator {
+            position: absolute;
+            bottom: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 134px;
+            height: 5px;
+            background: white;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="iphone">
+        <div class="screen">
+            <div class="status-bar">
+                <div class="time">10:06</div>
+                <div class="battery-wifi">
+                    <span>●●●●●</span>
+                    <span>📶</span>
+                    <span>🔋</span>
+                </div>
+            </div>
+
+            <div class="apps-container">
+                <div class="app whatsapp" onclick="openWhatsApp()">
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="white">
+                        <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91C21.95 6.45 17.5 2 12.04 2zm.58 17.38c-1.54 0-3.06-.42-4.37-1.21l-.31-.19-3.24.85.86-3.14-.21-.33c-.87-1.38-1.33-2.98-1.33-4.61 0-4.77 3.89-8.66 8.66-8.66s8.66 3.89 8.66 8.66-3.89 8.63-8.72 8.63z"/>
+                        <path d="M16.6 13.85c-.25-.12-1.47-.72-1.7-.81-.22-.08-.39-.12-.55.12-.17.25-.64.81-.78.97-.15.17-.29.19-.54.06-.25-.12-1.05-.39-2-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.02-.38.11-.51.11-.11.25-.29.37-.43s.17-.25.25-.42c.08-.17.04-.31-.02-.43s-.55-1.33-.76-1.82c-.2-.48-.41-.42-.55-.42-.14-.01-.31-.01-.47-.01s-.43.06-.65.31c-.22.25-.84.82-.84 2.01s.86 2.33.98 2.49c.12.17 1.75 2.67 4.24 3.74.59.26 1.05.42 1.41.53.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.15-1.18-.07-.1-.22-.17-.47-.29z"/>
+                    </svg>
+                    <div class="app-label">WhatsApp</div>
+                </div>
+                
+                <div class="app uinik" onclick="return false;">
+                    UK
+                    <div class="app-label">Uinik</div>
+                </div>
+            </div>
+
+            <div class="whatsapp-interface" id="whatsapp">
+                <div class="whatsapp-header">
+                    <div class="whatsapp-title">Chats</div>
+                </div>
+                
+                <div class="chats-list">
+                    <div class="chat-item" onclick="openGroupChat()">
+                        <div class="chat-avatar"></div>
+                        <div class="chat-info">
+                            <div class="chat-name">Los de siempre</div>
+                            <div class="chat-last-message">Amigo 1: Chicos… entren a su GitHub.</div>
+                        </div>
+                        <div class="chat-time">10:06 PM</div>
+                    </div>
+                    
+                    <div class="chat-item">
+                        <div class="chat-avatar"></div>
+                        <div class="chat-info">
+                            <div class="chat-name">Mama</div>
+                            <div class="chat-last-message">con cuidado hijo</div>
+                        </div>
+                        <div class="chat-time">9:45 PM</div>
+                    </div>
+                    
+                    <div class="chat-item">
+                        <div class="chat-avatar"></div>
+                        <div class="chat-info">
+                            <div class="chat-name">Grupo de familia</div>
+                            <div class="chat-last-message">estamos llevando la cena</div>
+                        </div>
+                        <div class="chat-time">8:30 PM</div>
+                    </div>
+                    
+                    <div class="chat-item">
+                        <div class="chat-avatar"></div>
+                        <div class="chat-info">
+                            <div class="chat-name">Amor</div>
+                            <div class="chat-last-message">te amo</div>
+                        </div>
+                        <div class="chat-time">7:15 PM</div>
+                    </div>
+                    
+                    <div class="chat-item">
+                        <div class="chat-avatar"></div>
+                        <div class="chat-info">
+                            <div class="chat-name">Armando</div>
+                            <div class="chat-last-message">saca el lol jajaja</div>
+                        </div>
+                        <div class="chat-time">6:20 PM</div>
+                    </div>
+                    
+                    <div class="chat-item">
+                        <div class="chat-avatar"></div>
+                        <div class="chat-info">
+                            <div class="chat-name">Orlando</div>
+                            <div class="chat-last-message">Tú: \-/</div>
+                        </div>
+                        <div class="chat-time">5:45 PM</div>
+                    </div>
+                    
+                    <div class="chat-item">
+                        <div class="chat-avatar"></div>
+                        <div class="chat-info">
+                            <div class="chat-name">Orion</div>
+                            <div class="chat-last-message">despues hablamos de eso</div>
+                        </div>
+                        <div class="chat-time">4:30 PM</div>
+                    </div>
+                    
+                    <div class="chat-item">
+                        <div class="chat-avatar"></div>
+                        <div class="chat-info">
+                            <div class="chat-name">Nahil</div>
+                            <div class="chat-last-message">Audio</div>
+                        </div>
+                        <div class="chat-time">20 oct</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="group-chat" id="groupChat">
+                <div class="chat-header">
+                    <div class="back-btn" onclick="backToChats()">‹</div>
+                    <div class="chat-header-info">
+                        <div class="chat-header-name">Los de siempre</div>
+                        <div class="chat-header-status">Amigo 1, Amigo 2, Amigo 3, Amigo 4, Amigo 5</div>
+                    </div>
+                </div>
+                
+                <div class="messages-container">
+                    <div class="date-divider">16 de octubre</div>
+                    
+                    <div class="message received">
+                        <div class="message-bubble">
+                            <div class="message-author" style="color: #ff6b9d;">Amigo 3</div>
+                            <span class="mention">@Nahil</span> ¿ya terminaste lo del repo nuevo? Dijiste que nos ibas a sorprender 👀
+                        </div>
+                        <div class="message-time">10:17 PM</div>
+                    </div>
+                    
+                    <div class="message sent">
+                        <div class="message-bubble">
+                            <div class="message-author" style="color: #4fc3f7;">Amigo 1 (tú)</div>
+                            Estoy seguro que anda metido de lleno… como siempre jaja.
+                        </div>
+                        <div class="message-time">10:18 PM</div>
+                    </div>
+                    
+                    <div class="message received">
+                        <div class="message-bubble">
+                            <div class="message-author" style="color: #81c784;">Amigo 4</div>
+                            No sé ustedes, pero extraño nuestras madrugadas de juego.
+                        </div>
+                        <div class="message-time">10:19 PM</div>
+                    </div>
+                    
+                    <div class="message received">
+                        <div class="message-bubble">
+                            <div class="message-author" style="color: #ffb74d;">Amigo 5</div>
+                            Literal. Me hace falta que Nahil nos venga a hablar de teorías locas de cifrados en plena partida 😂
+                        </div>
+                        <div class="message-time">10:20 PM</div>
+                    </div>
+                    
+                    <div class="message received">
+                        <div class="message-bubble">
+                            <div class="message-author" style="color: #f06292;">Amigo 2</div>
+                            JAJA es que siempre decía "no estoy jugando, estoy estudiando cómo se rompen los sistemas". Qué genio.
+                        </div>
+                        <div class="message-time">10:21 PM</div>
+                    </div>
+
+                    <div class="date-divider">17 de octubre</div>
+                    
+                    <div class="message sent">
+                        <div class="message-bubble">
+                            <div class="message-author" style="color: #4fc3f7;">Amigo 1 (tú)</div>
+                            <span class="mention">@Nahil</span> contesta al menos un meme bro, te extrañamos.
+                        </div>
+                        <div class="message-time">9:22 PM</div>
+                    </div>
+                    
+                    <div class="message received">
+                        <div class="message-bubble">
+                            <div class="message-author" style="color: #ff6b9d;">Amigo 3</div>
+                            Lleva rato sin aparecer… ¿alguien sabe si está bien?
+                        </div>
+                        <div class="message-time">9:25 PM</div>
+                    </div>
+                    
+                    <div class="message received">
+                        <div class="message-bubble">
+                            <div class="message-author" style="color: #ffb74d;">Amigo 5</div>
+                            Quizás se desconectó un rato, lo ha hecho antes. Aunque igual… no sé, me parece raro.
+                        </div>
+                        <div class="message-time">9:27 PM</div>
+                    </div>
+
+                    <div class="date-divider">18 de octubre</div>
+                    
+                    <div class="message received">
+                        <div class="message-bubble">
+                            <div class="message-author" style="color: #f06292;">Amigo 2</div>
+                            Hoy tampoco contestó. Estoy empezando a sentir algo raro…
+                        </div>
+                        <div class="message-time">11:50 PM</div>
+                    </div>
+                    
+                    <div class="message received">
+                        <div class="message-bubble">
+                            <div class="message-author" style="color: #81c784;">Amigo 4</div>
+                            No quiero ser paranoico… pero Nahil nunca desaparece así.
+                        </div>
+                        <div class="message-time">11:52 PM</div>
+                    </div>
+
+                    <div class="date-divider">20 de octubre</div>
+                    
+                    <div class="message received">
+                        <div class="message-bubble">
+                            <div class="message-author" style="color: #9c27b0;">Nahil</div>
+                            <div class="audio-message" onclick="playAudio()">
+                                <div class="audio-play-btn">▶</div>
+                                <div class="audio-duration">Audio</div>
+                            </div>
+                        </div>
+                        <div class="message-time">8:42 AM</div>
+                    </div>
+                    
+                    <div class="message received">
+                        <div class="message-bubble">
+                            <div class="message-author" style="color: #ff6b9d;">Amigo 3</div>
+                            …acabo de escuchar el audio… no puedo creerlo… no puedo ni escribir bien. Nahil se fue… y yo no tuve la oportunidad de despedirme. Dios mío…
+                        </div>
+                        <div class="message-time">8:46 AM</div>
+                    </div>
+                    
+                    <div class="message sent">
+                        <div class="message-bubble">
+                            <div class="message-author" style="color: #4fc3f7;">Amigo 1 (tú)</div>
+                            Estoy en shock… no sé qué decir. Tenía tantas cosas que quería contarle… nunca pensé que algo así pudiera pasar. Siempre pensé que él era fuerte… incluso cuando estaba callado. Me duele tanto. Señora Ortega… gracias por compartirnos esto. Le mando un abrazo con el corazón destrozado.
+                        </div>
+                        <div class="message-time">8:47 AM</div>
+                    </div>
+                    
+                    <div class="message received">
+                        <div class="message-bubble">
+                            <div class="message-author" style="color: #ffb74d;">Amigo 5</div>
+                            Estoy llorando. Jamás pensé que Nahil estuviera tan solo… y aún así, él nos dio tanto. Nos ayudó, nos hizo reír, nos enseñó… él fue más que un amigo virtual, fue como un hermano para mí. Su pérdida es… inmensa. Gracias por confiar en nosotros para contar esto… estoy sin palabras.
+                        </div>
+                        <div class="message-time">8:48 AM</div>
+                    </div>
+                    
+                    <div class="message received">
+                        <div class="message-bubble">
+                            <div class="message-author" style="color: #81c784;">Amigo 4</div>
+                            Siempre pensé que Nahil era invencible… que su mente y su mundo eran tan grandes que nada podría tocarlo. Pero ahora entiendo que también necesitaba ayuda, aunque no lo dijera. Lo extraño ya… y apenas puedo creerlo. Gracias por todo, señora… y gracias a Nahil… por todo.
+                        </div>
+                        <div class="message-time">8:49 AM</div>
+                    </div>
+                    
+                    <div class="message received">
+                        <div class="message-bubble">
+                            <div class="message-author" style="color: #f06292;">Amigo 2</div>
+                            Escuché todo el audio… y siento que me arrancaron una parte de mí. Nahil era una de las pocas personas que realmente entendían cómo pienso… con quien podía hablar de todo… incluso cuando no decíamos mucho. Señora Ortega… no sabe cuánto le agradezco que nos haya contado esto. Él sigue con nosotros… de alguna manera.
+                        </div>
+                        <div class="message-time">8:50 AM</div>
+                    </div>
+
+                    <div class="date-divider">23 de octubre</div>
+                    
+                    <div class="message sent">
+                        <div class="message-bubble">
+                            <div class="message-author" style="color: #4fc3f7;">Amigo 1 (tú)</div>
+                            Hoy… me entró la nostalgia. Pensé que tal vez podía ver sus fotos, escuchar su voz otra vez… así que entré a su Instagram… y luego a su Facebook.<br><br>Pero… ya no hay nada.
+                        </div>
+                        <div class="message-time">9:12 PM</div>
+                    </div>
+                    
+                    <div class="message received">
+                        <div class="message-bubble">
+                            <div class="message-author" style="color: #ffb74d;">Amigo 5</div>
+                            ¿Nada? ¿Te refieres a que cerraron sus cuentas?
+                        </div>
+                        <div class="message-time">9:13 PM</div>
+                    </div>
+                    
+                    <div class="message sent">
+                        <div class="message-bubble">
+                            <div class="message-author" style="color: #4fc3f7;">Amigo 1 (tú)</div>
+                            No es que estén cerradas… es como si nunca hubieran existido. Todo desapareció. Ni siquiera WhatsApp me muestra su última conexión… pero el mensaje de su mamá fue desde su número…
+                        </div>
+                        <div class="message-time">9:14 PM</div>
+                    </div>
+                    
+                    <div class="message received">
+                        <div class="message-bubble">
+                            <div class="message-author" style="color: #ff6b9d;">Amigo 3</div>
+                            Eso no tiene sentido. ¿Quién eliminaría todo eso? Y si fue su madre… ¿por qué tan rápido?
+                        </div>
+                        <div class="message-time">9:15 PM</div>
+                    </div>
+                    
+                    <div class="message sent">
+                        <div class="message-bubble">
+                            <div class="message-author" style="color: #4fc3f7;">Amigo 1 (tú)</div>
+                            No creo que haya sido ella. El audio… se escuchaba confundida, perdida… como nosotros. No tenía idea de que todo esto existía.
+                        </div>
+                        <div class="message-time">9:16 PM</div>
+                    </div>
+                    
+                    <div class="message received">
+                        <div class="message-bubble">
+                            <div class="message-author" style="color: #f06292;">Amigo 2</div>
+                            Entonces… ¿Nahil mismo? ¿Antes de…?
+                        </div>
+                        <div class="message-time">9:17 PM</div>
+                    </div>
+                    
+                    <div class="message received">
+                        <div class="message-bubble">
+                            <div class="message-author" style="color: #81c784;">Amigo 4</div>
+                            ¿Lo planeó todo? ¿Por qué? ¿Qué nos quiso decir?
+                        </div>
+                        <div class="message-time">9:18 PM</div>
+                    </div>
+                    
+                    <div class="message sent">
+                        <div class="message-bubble">
+                            <div class="message-author" style="color: #4fc3f7;">Amigo 1 (tú)</div>
+                            Él nunca nos ocultaba nada… siempre nos dejaba pistas, chistes, hasta sus silencios tenían sentido… y ahora esto.<br><br>Voy a revisar su GitHub. Es lo único que aún parece estar online… Siento que… dejó algo allí. Nahil nunca hacía nada al azar.
+                        </div>
+                        <div class="message-time">9:19 PM</div>
+                    </div>
+                    
+                    <div class="message received">
+                        <div class="message-bubble">
+                            <div class="message-author" style="color: #ff6b9d;">Amigo 3</div>
+                            No sé por qué… pero tengo el presentimiento de que esto no es el final. Es solo el principio.
+                        </div>
+                        <div class="message-time">9:20 PM</div>
+                    </div>
+                    
+                    <div class="message sent">
+                        <div class="message-bubble">
+                            <div class="message-author" style="color: #4fc3f7;">Amigo 1 (tú)</div>
+                            Chicos… entren a su GitHub.<br><br>Todo desapareció… no hay nada. Ninguna de sus repos… ninguna.<br><br>Solo queda una. Un archivo. Un solo archivo.
+                            <div class="link-preview">
+                                <a href="#" class="link-url">https://github.com/nahil404/404lvdollyh</a>
+                                <div class="link-title">GitHub Repository</div>
+                            </div>
+                        </div>
+                        <div class="message-time">10:06 PM</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="home-indicator"></div>
+        </div>
+    </div>
+
+    <script>
+        function openWhatsApp() {
+            document.getElementById('whatsapp').style.display = 'block';
+        }
+
+        function openGroupChat() {
+            document.getElementById('groupChat').style.display = 'block';
+        }
+
+        function backToChats() {
+            document.getElementById('groupChat').style.display = 'none';
+        }
+
+        function playAudio() {
+            const audio = new Audio('audio1.mp3');
+            const playBtn = document.querySelector('.audio-play-btn');
+            const audioMessage = document.querySelector('.audio-message');
+            
+            if (audio.paused) {
+                audio.play().catch(e => {
+                    // If audio file doesn't exist, show a message
+                    alert('Reproduciendo audio de la madre de Nahil...');
+                });
+                playBtn.innerHTML = '⏸';
+                audioMessage.style.background = '#2a3942';
+            } else {
+                audio.pause();
+                playBtn.innerHTML = '▶';
+                audioMessage.style.background = '#202c33';
+            }
+            
+            audio.addEventListener('ended', () => {
+                playBtn.innerHTML = '▶';
+                audioMessage.style.background = '#202c33';
+            });
+        }
+
+        // Add some scroll behavior for messages
+        document.addEventListener('DOMContentLoaded', function() {
+            const messagesContainer = document.querySelector('.messages-container');
+            if (messagesContainer) {
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            }
+        });
+    </script>
+</body>
+</html>
