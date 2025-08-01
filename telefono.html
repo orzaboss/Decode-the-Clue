@@ -194,6 +194,7 @@
             width: 100%;
             height: 100%;
             background: #0b141a;
+            flex-direction: column;
         }
 
         .chat-header {
@@ -232,6 +233,8 @@
             flex: 1;
             overflow-y: auto;
             padding: 16px;
+            height: calc(100vh - 90px);
+            max-height: calc(812px - 90px);
         }
 
         .date-divider {
@@ -713,7 +716,16 @@
         }
 
         function openGroupChat() {
-            document.getElementById('groupChat').style.display = 'block';
+            const groupChat = document.getElementById('groupChat');
+            groupChat.style.display = 'flex';
+            
+            // Scroll to bottom after opening
+            setTimeout(() => {
+                const messagesContainer = groupChat.querySelector('.messages-container');
+                if (messagesContainer) {
+                    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                }
+            }, 100);
         }
 
         function backToChats() {
