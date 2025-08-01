@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uinik News - Periódico Digital</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .newspaper-title {
+            font-size: 3.5em;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            letter-spacing: 2px;
+        }
+        
+        .date-line {
+            text-align: center;
+            font-size: 1.2em;
+            margin-bottom: 10px;
+            opacity: 0.9;
+        }
+        
+        .subtitle {
+            text-align: center;
+            font-style: italic;
+            font-size: 1.1em;
+            opacity: 0.8;
+        }
+        
+        .main-content {
+            background: white;
+            margin: 30px auto;
+            padding: 40px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            border-radius: 10px;
+        }
+        
+        .article-header {
+            border-bottom: 3px solid #1e3c72;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .article-title {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #1e3c72;
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+        
+        .article-meta {
+            font-size: 1.1em;
+            color: #666;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .article-location {
+            font-size: 1.2em;
+            color: #1e3c72;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        
+        .article-image {
+            width: 100%;
+            max-width: 600px;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin: 20px auto;
+            display: block;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .article-content {
+            font-size: 1.15em;
+            line-height: 1.8;
+            text-align: justify;
+            columns: 2;
+            column-gap: 40px;
+            column-rule: 1px solid #ddd;
+        }
+        
+        .article-content p {
+            margin-bottom: 15px;
+            break-inside: avoid;
+        }
+        
+        .footer {
+            background: #1e3c72;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 40px;
+        }
+        
+        .breaking-banner {
+            background: #dc3545;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            font-weight: bold;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+        
+        @media (max-width: 768px) {
+            .newspaper-title {
+                font-size: 2.5em;
+            }
+            
+            .article-title {
+                font-size: 2em;
+            }
+            
+            .article-content {
+                columns: 1;
+            }
+            
+            .main-content {
+                padding: 20px;
+                margin: 20px 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="breaking-banner">
+        🔴 ÚLTIMA HORA - NOTICIA EN DESARROLLO
+    </div>
+    
+    <header class="header">
+        <div class="container">
+            <h1 class="newspaper-title">UINIK NEWS</h1>
+            <div class="date-line">Viernes, 18 de octubre de 2024</div>
+            <div class="subtitle">Edición Digital - Yucatán, México</div>
+        </div>
+    </header>
+
+    <main class="container">
+        <article class="main-content">
+            <div class="article-header">
+                <h2 class="article-title">Joven ingeniero fallece en su domicilio en el norte de Mérida</h2>
+                <div class="article-meta">Publicado por Diario de Yucatán | Edición Digital | Sección: Local</div>
+                <div class="article-location">Mérida, Yucatán, 18 de octubre</div>
+            </div>
+            
+            <img src="imagen1.png" alt="Imagen relacionada con la noticia" class="article-image">
+            
+            <div class="article-content">
+                <p>Las autoridades locales confirmaron ayer por la mañana el fallecimiento de un joven identificado como <strong>Nahil Damián Velázquez Ortega</strong>, de 27 años, quien fue encontrado sin vida en su domicilio ubicado en una colonia del norte de la ciudad.</p>
+                
+                <p>Según los primeros informes proporcionados por la Secretaría de Seguridad Pública (SSP), el hallazgo ocurrió alrededor de las 7:30 a.m., luego de que vecinos alertaran a los servicios de emergencia al notar que el joven no respondía a los llamados de su madre, quien lo visitaba con frecuencia.</p>
+                
+                <p>Paramédicos que llegaron al lugar solo pudieron confirmar que Velázquez Ortega ya no contaba con signos vitales. La Fiscalía General del Estado (FGE) informó que no se hallaron signos evidentes de violencia en el inmueble y que el cuerpo fue trasladado al Servicio Médico Forense (Semefo) para realizar la autopsia correspondiente.</p>
+                
+                <p><strong>Nahil Velázquez</strong> era conocido en su entorno como un joven reservado, dedicado a temas de informática y tecnología. Vecinos señalaron que trabajaba de manera remota desde su domicilio y que rara vez salía de casa, salvo para asuntos personales o reuniones familiares.</p>
+                
+                <p>Personas cercanas describieron al joven como alguien tranquilo, con intereses particulares en computadoras, redes y sistemas de seguridad digital.</p>
+                
+                <p>La FGE mantiene abierta una investigación para esclarecer la causa exacta del fallecimiento, aunque en primera instancia se ha manejado la hipótesis de un accidente doméstico. No se han dado a conocer más detalles hasta el momento.</p>
+                
+                <p>Familiares han solicitado respeto a su privacidad durante el proceso de duelo y no se ha informado sobre servicios funerarios públicos. Las autoridades indicaron que en caso de obtener información adicional, se emitirá un comunicado oficial.</p>
+                
+                <p>Este suceso ha causado consternación entre conocidos y vecinos del sector, quienes lamentaron la pérdida del joven, a quien describen como alguien discreto, educado y siempre dispuesto a ayudar en temas tecnológicos.</p>
+            </div>
+        </article>
+    </main>
+    
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Uinik News - Periódico Digital de Yucatán</p>
+            <p>Mantente informado con las noticias más relevantes de la región</p>
+        </div>
+    </footer>
+</body>
+</html>
