@@ -360,7 +360,7 @@
                 
                 <div class="buttons-container">
                     <a href="#" class="btn">Inscribirse</a>
-                    <a href="#" class="btn secondary">Historia</a>
+                    <a href="periodico.html" class="btn secondary">Historia</a>
                 </div>
 
                 <div class="features">
@@ -392,61 +392,10 @@
     <div class="trigger-area"></div>
     <div class="hidden-message">Nada es lo que parece...</div>
 
-    <!-- Audio elements -->
-    <audio id="introAudio" preload="auto">
-        <source src="fadein.mp3" type="audio/mpeg">
-    </audio>
-    
-    <audio id="mysteryAudio" preload="auto" loop>
-        <source src="mystery.mp3" type="audio/mpeg">
-    </audio>
-
-
     <script>
-        // Audio management
-        const introAudio = document.getElementById('introAudio');
-        const mysteryAudio = document.getElementById('mysteryAudio');
-        
-        // Start intro audio when page loads
-        window.addEventListener('load', function() {
-            // Try to play intro audio (might need user interaction first)
-            introAudio.play().catch(function(e) {
-                console.log('Audio autoplay prevented, will play on user interaction');
-                // Add click listener to start audio on first user interaction
-                document.addEventListener('click', startAudioSequence, { once: true });
-            });
-        });
-        
-        function startAudioSequence() {
-            introAudio.play().catch(function(e) {
-                console.log('Intro audio failed to play');
-            });
-        }
-        
-        // When intro audio ends, start mystery audio loop
-        introAudio.addEventListener('ended', function() {
-            // Wait a moment for the main content to fully appear
-            setTimeout(function() {
-                mysteryAudio.volume = 0.3; // Set lower volume for background
-                mysteryAudio.play().catch(function(e) {
-                    console.log('Mystery audio failed to play');
-                });
-            }, 500);
-        });
-        
-        // Fade out mystery audio when user hovers over hidden message area
-        const triggerArea = document.querySelector('.trigger-area');
-        triggerArea.addEventListener('mouseenter', function() {
-            mysteryAudio.volume = 0.1;
-        });
-        
-        triggerArea.addEventListener('mouseleave', function() {
-            mysteryAudio.volume = 0.3;
-        });
-
         // Smooth scrolling for buttons (when they have actual destinations)
-        document.querySelectorAll('.btn').forEach(function(btn) {
-            btn.addEventListener('click', function(e) {
+        document.querySelectorAll('.btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
                 e.preventDefault();
                 // Add your navigation logic here
                 console.log('Navigating to:', btn.textContent);
@@ -454,7 +403,7 @@
         });
 
         // Add subtle parallax effect
-        window.addEventListener('scroll', function() {
+        window.addEventListener('scroll', () => {
             const scrolled = window.pageYOffset;
             const parallax = document.querySelector('body::before');
             if (parallax) {
